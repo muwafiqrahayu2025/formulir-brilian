@@ -96,7 +96,7 @@
       </p>
     </header>
 
-    <form class="space-y-14" autocomplete="off" novalidate method="POST" action="https://script.google.com/macros/s/AKfycbxxaWWYWR8nPFwQutrs1dnQNHQhAcOn6B8R_QZvpr5i0lNiS24b_vH_KbNhpv/exec" onsubmit="this.submit(); this.reset(); alert('Terima kasih! Data Anda telah terkirim.'); return false;">
+    <form class="space-y-14" method="POST" action="https://formspree.io/f/mwpowqvy" onsubmit="handleSubmit(event)">
       <section>
         <h2 class="text-3xl font-bold text-indigo-700 mb-8 border-b-4 border-indigo-500 pb-4 tracking-wide flex items-center gap-3 select-none">
           <i class="fas fa-user-circle text-indigo-600 text-3xl"></i> Data Pribadi
@@ -325,5 +325,35 @@
       BISNIS BRILIAN
     </p>
   </footer>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    grecaptcha.ready(function() {
+      grecaptcha.execute('6LcKyTgrAAAAAFiLnvtWDhoakCJmj2VR8trCtWrO', {action: 'submit'}).then(function(token) {
+        const formData = new FormData(form);
+        fetch('https://formspree.io/f/mwpowqvy', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        }).then(response => {
+          if (response.ok) {
+            document.body.innerHTML = `
+              <div style="text-align: center; padding: 100px;">
+                <h2 style="color: #4caf50;">✅ Terima kasih!</h2>
+                <p>Pendaftaran Anda telah berhasil dikirim.</p>
+                <a href="/" style="margin-top: 20px; display: inline-block; color: #3f51b5;">Kembali ke formulir</a>
+              </div>`;
+          } else {
+            alert("Gagal mengirim formulir.");
+          }
+        });
+      });
+    });
+  }
+</script>
+
 </body>
 </html>
