@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulir Brilian</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #f1f5f9;
+    }
+    .form-container {
+      max-width: 480px;
+      margin: auto;
+      background: white;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 1.5rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .g-recaptcha {
+      margin-top: 1rem;
+      transform: scale(0.95);
+      transform-origin: 0 0;
+    }
+    @media (max-width: 500px) {
+      .form-container {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Formulir Pendaftaran</h2>
+    <form action="https://formspree.io/f/mwpowqvy" method="POST" onsubmit="return validateCaptcha()">
+      <label for="nama_ktp">Nama Lengkap</label>
+      <input type="text" name="nama_ktp" required />
+
+      <label for="nomor_identitas">Nomor Identitas</label>
+      <input type="text" name="nomor_identitas" required />
+
+      <label for="email_aktif">Email</label>
+      <input type="email" name="email_aktif" required />
+
+      <label for="nomor_hp">Nomor HP</label>
+      <input type="tel" name="nomor_hp" required />
+
+      <label for="kota_domisili">Kota Domisili</label>
+      <input type="text" name="kota_domisili" />
+
+      <div class="g-recaptcha" data-sitekey="6LcKyTgrAAAAAFiLnvtWDhoakCJmj2VR8trCtWrO"></div>
+
+      <button type="submit">Kirim Formulir</button>
+    </form>
+  </div>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    function validateCaptcha() {
+      var response = grecaptcha.getResponse();
+      if (response.length === 0) {
+        alert("Harap centang kotak 'Saya bukan robot'");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
